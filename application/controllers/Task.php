@@ -19,14 +19,35 @@ class Task extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-    public function index()
-    {
-        echo 'Hello World!';
-    }
 
 	public function remove($id){
-        $this->load->modal('Task');
-        $this->Task->remove($id);
+        $this->load->model('Task_model');
+        $this->Task_model->remove($id);
 
     }
+	public function add(){
+		$title = $this->input->post('title');
+		$description = $this->input->post('description');
+		$this->load->model('Task_model');
+		if($title && $description){
+			$this->Task_model->insert(['title'=>$title,'description'=>$description]);
+			$this->load->helper('url');
+			return redirect('');
+		}
+	}
+	public function editDone($id){
+		$done=$this->input->post('done');
+		$this->load->model('Task_model');
+		$this->Task_model->update($id,['done'=>$done]);
+	}
+	public function edit($id){
+
+		$title =$this->input->post('title');
+		$description =$this->input->post('description');
+		$this->load->model('Task_model');
+		$this->Task_model->update($id,['title'=>$title,'description'=>$description]);
+		$this->load->helper('url');
+
+		return redirect('');
+	}
 }

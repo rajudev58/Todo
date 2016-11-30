@@ -10,46 +10,84 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-	<!--modal hidden : to add a new task a modal is displayed-->
+	<!--modal to add new task hidden : to add a new task a modal is displayed-->
 	<div id="AddModal" class="modal fade add-modal" role="dialog">
 	 	<div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		    	<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        	<h4 class="modal-title">Add New Task</h4>
+		      	</div>
+		      	<div class="modal-body">
+					<form id="task_add_form" class="form-horizontal task-add-form" role="form" method="POST" action="/index.php/task/add">
+				     	<div class="form-group">
+				          	<label for="title" class="col-md-2 control-label left">Title</label>
 
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	    	<div class="modal-header">
-	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        	<h4 class="modal-title">Add New Task</h4>
-	      	</div>
-	      	<div class="modal-body">
-				<form id="task_add_form" class="form-horizontal task-add-form" role="form" method="POST" action="{{ url('/task/add') }}">
-			     	<div class="form-group">
-			          	<label for="title" class="col-md-2 control-label left">Title</label>
+				          	<div class="col-md-10">
+				            	<input id="title" type="text" class="form-control" name="title" required autofocus>
+				          	</div>
+						</div>
+						<div class="form-group">
+				          	<label for="description" class="col-md-2 control-label left">Description</label>
 
-			          	<div class="col-md-10">
-			            	<input id="title" type="text" class="form-control" name="title" required autofocus>
-			          	</div>
-					</div>
-					<div class="form-group">
-			          	<label for="description" class="col-md-2 control-label left">Description</label>
+				          	<div class="col-md-10">
+				            	<textarea id="description" class="form-control" name="description" required></textarea>
+				          	</div>
 
-			          	<div class="col-md-10">
-			            	<textarea id="description" class="form-control" name="description" required></textarea>
-			          	</div>
-
-	      			</div>
+		      			</div>
 
 
-		      		<div class="form-group">
-		          		<div class="col-md-2 col-md-offset-2">
-		              		<button id="submit_button" type="submit" class="btn btn-primary">
-		                  		Add
-		              		</button>
-		          		</div>
-		      		</div>
-	  				</form>
-	      	</div>
-	    </div>
+			      		<div class="form-group">
+			          		<div class="col-md-2 col-md-offset-2">
+			              		<button id="submit_button" type="submit" class="btn btn-primary">
+			                  		Add
+			              		</button>
+			          		</div>
+			      		</div>
+		  				</form>
+		      	</div>
+		    </div>
+		</div>
+	</div>
+	<!--modal to edit task hidden : to edit a task a modal is displayed-->
+	<div id="edit-modal" class="modal fade edit-modal" role="dialog">
+	 	<div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		    	<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        	<h4 class="modal-title">Edit Task</h4>
+		      	</div>
+		      	<div class="modal-body">
+					<form id="task_edit_form" class="form-horizontal task-add-form" role="form" method="POST" action="">
+				     	<div class="form-group">
+				          	<label for="title" class="col-md-2 control-label left">Title</label>
 
+				          	<div class="col-md-10">
+				            	<input id="title" type="text" class="form-control" name="title" required autofocus>
+				          	</div>
+						</div>
+						<div class="form-group">
+				          	<label for="description" class="col-md-2 control-label left">Description</label>
+
+				          	<div class="col-md-10">
+				            	<textarea id="description" class="form-control" name="description" required></textarea>
+				          	</div>
+
+		      			</div>
+
+
+			      		<div class="form-group">
+			          		<div class="col-md-2 col-md-offset-2">
+			              		<button id="submit_button" type="submit" class="btn btn-primary">
+			                  		Add
+			              		</button>
+			          		</div>
+			      		</div>
+		  				</form>
+		      	</div>
+		    </div>
 		</div>
 	</div>
 
@@ -70,15 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -102,16 +132,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$i=0;
 						foreach($tasks as $t){ // loop through all tasks and display them
 							$i++;
+							$cls;
+							if($t->done){
+								$cls = "checked";
+							}
+							else{
+								$cls =" ";
+							}
 							echo '<div class="task-item col-md-4">';
 							echo 	'<div class="panel panel-primary">';
 							echo 		'<div class="task-heading panel-heading">'.$t->title.'</div>';
 							echo 		'<div class="task-body panel-body">';
-							echo 			'<div class="col-md-9 ">';
+							echo 			'<div class="col-md-9 description">';
 							echo 				$t->description;
 							echo 			'</div>';
 							echo 			'<div class="col-md-3 ">';
 							echo				'<div class="btn-group-vertical btn-group-xs right" role="group">
-												<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-pencil"></button>
+												<button data-id="'.$t->id.'" class="btn btn-xs btn-default check-task-button '.$cls.'"><span class="glyphicon glyphicon-check"></button>
+												<button data-id="'.$t->id.'" class="btn btn-xs btn-default edit-task-button"><span class="glyphicon glyphicon-pencil"></button>
 												<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-trash"></button>
 											</div>
 										</div><!-- button group-->

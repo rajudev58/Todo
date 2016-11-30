@@ -1,19 +1,23 @@
 <?php
 
-Class Task extends CI_Model{
+Class Task_model extends CI_Model{
     public function __construct(){
         parent::__construct();
         $this->load->database('default');
     }
-    public function insert(){
-
+    public function insert($args=array()){
+        if($args){
+            $this->db->insert('tasks',$args);
+        }
     }
     public function remove($id){
         $this->db->where('id', $id);
         $this->db->delete('tasks');
     }
-    public function update($id){
-
+    public function update($id,$data){
+        $this->db->where('id', $id);
+        $this->db->update('tasks',$data);
+        echo $this->db->last_query();                      
     }
     public function readAll(){
         $query=$this->db->get('tasks');

@@ -12,3 +12,12 @@ textarea{
     color:#337ab7;
 
 }
+.checked{ 
+    color:red;
+}
+.checked:hover{
+    color:red;
+}
+.checked:focus{
+    color:red;
+}
