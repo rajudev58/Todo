@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url:"/gettables",
+        url:"/",
         type:'GET',
         dataType:'json',
     }).done(function(result){

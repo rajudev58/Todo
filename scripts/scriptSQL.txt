@@ -1,0 +1,9 @@
+CREATE TABLE tasks(
+    id int auto_increment,
+    title varchar(255),
+    description text,
+    PRIMARY KEY(id)
+);
+Insert into tasks(title,description) values('Custom Task','This is a custom task');
+
+Insert into tasks(title,description) values('Another Task','This is another task');
