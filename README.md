@@ -1,5 +1,5 @@
 # Todo
-This is a small to do web apllication implemented using PHP codeigniter.
+This is a small to do web apllication implemented using PHP codeigniter and uses boostrap css framework for basic styling and jquery for client side logic.
 
 It must only be used for development purposes only.
 
