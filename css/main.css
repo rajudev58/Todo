@@ -4,3 +4,11 @@
 .right{
     float:right;
 }
+textarea{
+    resize:vertical;
+}
+.modal-header{
+    border-color:#337ab7;
+    color:#337ab7;
+
+}

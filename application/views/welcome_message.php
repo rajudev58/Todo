@@ -10,6 +10,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="css/main.css" rel="stylesheet">
 </head>
 <body>
+	<!--modal hidden : to add a new task a modal is displayed-->
+	<div id="AddModal" class="modal fade add-modal" role="dialog">
+	 	<div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	    	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        	<h4 class="modal-title">Add New Task</h4>
+	      	</div>
+	      	<div class="modal-body">
+				<form id="task_add_form" class="form-horizontal task-add-form" role="form" method="POST" action="{{ url('/task/add') }}">
+			     	<div class="form-group">
+			          	<label for="title" class="col-md-2 control-label left">Title</label>
+
+			          	<div class="col-md-10">
+			            	<input id="title" type="text" class="form-control" name="title" required autofocus>
+			          	</div>
+					</div>
+					<div class="form-group">
+			          	<label for="description" class="col-md-2 control-label left">Description</label>
+
+			          	<div class="col-md-10">
+			            	<textarea id="description" class="form-control" name="description" required></textarea>
+			          	</div>
+
+	      			</div>
+
+
+		      		<div class="form-group">
+		          		<div class="col-md-2 col-md-offset-2">
+		              		<button id="submit_button" type="submit" class="btn btn-primary">
+		                  		Add
+		              		</button>
+		          		</div>
+		      		</div>
+	  				</form>
+	      	</div>
+	    </div>
+
+		</div>
+	</div>
+
+
 	<!-- Navigation -->
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
@@ -48,36 +92,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="content-body panel-body">
 					<div class="col-md-12">
 						<div class="btn-group btn-group-md" role="group">
-							<button class="btn btn-md btn-danger">Add Task</button>
+							<button class="btn btn-md btn-danger add-task-button">Add Task</button>
 						</div>
 					</div>
 					<br/>
+					<br/>
+					<br/>
 					<?php
 						$i=0;
-						foreach($tasks as $t){
+						foreach($tasks as $t){ // loop through all tasks and display them
 							$i++;
-							if($i%4 === 0){
-								echo "<div class='row'>";//echo a row when three tasks are placed already
-							}
 							echo '<div class="task-item col-md-4">';
 							echo 	'<div class="panel panel-primary">';
 							echo 		'<div class="task-heading panel-heading">'.$t->title.'</div>';
 							echo 		'<div class="task-body panel-body">';
-							echo 			'<div class="col-md-9">';
+							echo 			'<div class="col-md-9 ">';
 							echo 				$t->description;
 							echo 			'</div>';
-							echo 			'<div class="col-md-3">';
-							echo				'<div class="btn-group-vertical btn-group-md" role="group">
-												<button class="btn btn-xs btn-default">Remove</button>
-												<button class="btn btn-xs btn-default">Edit</button>
+							echo 			'<div class="col-md-3 ">';
+							echo				'<div class="btn-group-vertical btn-group-xs right" role="group">
+												<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-pencil"></button>
+												<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-trash"></button>
 											</div>
 										</div><!-- button group-->
 									</div><!-- task-body-->
 								</div><!-- task-panel-->
 							</div><!--task-item -->' ;
-							if($i%4 === 0){
-								echo "</div>"; //echo a row when 3 items are placed already
-							}
+
 						}
 					?>
 
@@ -87,5 +128,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div><!-- main panel-->
 		</div><!-- row-->
 	</div><!-- content container-->
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

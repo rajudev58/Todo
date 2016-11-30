@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Task extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,11 +18,15 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
-		$this->load->model('Task');
-		$tasks=$this->Task->readAll();
-		$this->load->view('welcome_message',['tasks'=>$tasks]);
-	}
 
+    public function index()
+    {
+        echo 'Hello World!';
+    }
+
+	public function remove($id){
+        $this->load->modal('Task');
+        $this->Task->remove($id);
+
+    }
 }
