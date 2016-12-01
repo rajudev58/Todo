@@ -3,6 +3,8 @@ CREATE TABLE tasks(
     title varchar(255),
     description text,
     done boolean default 0,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deadline TIMESTAMP,
     PRIMARY KEY(id)
 );
 Insert into tasks(title,description) values('Custom Task','This is a custom task');

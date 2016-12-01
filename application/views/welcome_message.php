@@ -36,8 +36,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				          	</div>
 
 		      			</div>
+						<div class="form-group">
+				          	<label for="deadline" class="col-md-2 control-label left">Deadline</label>
 
+				          	<div class="col-md-10">
+				            	<input id="deadline" type="date" class="form-control" name="deadline"></input>
+				          	</div>
 
+		      			</div>
 			      		<div class="form-group">
 			          		<div class="col-md-2 col-md-offset-2">
 			              		<button id="submit_button" type="submit" class="btn btn-primary">
@@ -77,6 +83,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		      			</div>
 
+						<div class="form-group">
+							<label for="deadline" class="col-md-2 control-label left">Deadline</label>
+
+							<div class="col-md-10">
+								<input id="deadline" type="date" class="form-control" name="deadline"></input>
+							</div>
+
+						</div>
 
 			      		<div class="form-group">
 			          		<div class="col-md-2 col-md-offset-2">
@@ -133,11 +147,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						foreach($tasks as $t){ // loop through all tasks and display them
 							$i++;
 							$cls;
+							$deadline="";
 							if($t->done){
 								$cls = "checked";
 							}
 							else{
 								$cls =" ";
+							}
+							if($t->deadline > 0){
+								$deadline =explode(' ',$t->deadline);
+								$deadline = '<b>Deadline </b>'.$deadline[0];
 							}
 							echo '<div class="task-item col-md-4">';
 							echo 	'<div class="panel panel-primary">';
@@ -148,12 +167,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo 			'</div>';
 							echo 			'<div class="col-md-3 ">';
 							echo				'<div class="btn-group-vertical btn-group-xs right" role="group">
-												<button data-id="'.$t->id.'" class="btn btn-xs btn-default check-task-button '.$cls.'"><span class="glyphicon glyphicon-check"></button>
-												<button data-id="'.$t->id.'" class="btn btn-xs btn-default edit-task-button"><span class="glyphicon glyphicon-pencil"></button>
-												<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-trash"></button>
+													<button data-id="'.$t->id.'" class="btn btn-xs btn-default check-task-button '.$cls.'"><span class="glyphicon glyphicon-check"></button>
+													<button data-id="'.$t->id.'" class="btn btn-xs btn-default edit-task-button"><span class="glyphicon glyphicon-pencil"></button>
+													<button data-id="'.$t->id.'" class="btn btn-xs btn-default remove-task-button"><span class="glyphicon glyphicon-trash"></button>
+												</div>
 											</div>
-										</div><!-- button group-->
+											<div class="col-md-9 task-footer">
+												'.$deadline.'
+											</div>
 									</div><!-- task-body-->
+									<div class="panel-footer">
+										<span class="light">Updated '.$t->updated_at.'</span>
+									</div>
 								</div><!-- task-panel-->
 							</div><!--task-item -->' ;
 

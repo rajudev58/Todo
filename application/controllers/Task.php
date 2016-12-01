@@ -28,9 +28,10 @@ class Task extends CI_Controller {
 	public function add(){
 		$title = $this->input->post('title');
 		$description = $this->input->post('description');
+		$deadline = $this->input->post('deadline');
 		$this->load->model('Task_model');
 		if($title && $description){
-			$this->Task_model->insert(['title'=>$title,'description'=>$description]);
+			$this->Task_model->insert(['title'=>$title,'description'=>$description,'deadline'=>$deadline]);
 			$this->load->helper('url');
 			return redirect('');
 		}
